@@ -8,7 +8,7 @@ class GildedRoseTest extends PHPUnit_Framework_TestCase {
         $items = array(new Item("foo", 0, 0));
         $gildedRose = new GildedRose($items);
         $gildedRose->update_quality();
-        $this->assertEquals("fixme", $items[0]->name);
+        $this->assertEquals("foo", $items[0]->name);
     }
 
 }
