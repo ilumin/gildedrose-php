@@ -46,6 +46,7 @@ class GildedRoseTest extends PHPUnit_Framework_TestCase {
         $gildedRose = new GildedRose($items);
         $gildedRose->update_quality();
 
+        $this->assertEquals(0, $items[0]->sell_in);
         $this->assertEquals(1, $items[0]->quality);
     }
 
@@ -58,6 +59,7 @@ class GildedRoseTest extends PHPUnit_Framework_TestCase {
         $gildedRose = new GildedRose($items);
         $gildedRose->update_quality();
 
+        $this->assertEquals(0, $items[0]->sell_in);
         $this->assertEquals(50, $items[0]->quality);
     }
 
@@ -70,6 +72,59 @@ class GildedRoseTest extends PHPUnit_Framework_TestCase {
         $gildedRose = new GildedRose($items);
         $gildedRose->update_quality();
 
+        $this->assertEquals(1, $items[0]->sell_in);
         $this->assertEquals(80, $items[0]->quality);
+    }
+
+    /**
+     * @Requirements "Backstage passes", like aged brie, increases in Quality as its SellIn value approaches
+     */
+    public function testQualityIncreaseForBackstage()
+    {
+        $items = array(new Item("Backstage passes to a TAFKAL80ETC concert", 20, 49));
+        $gildedRose = new GildedRose($items);
+        $gildedRose->update_quality();
+
+        $this->assertEquals(19, $items[0]->sell_in);
+        $this->assertEquals(50, $items[0]->quality);
+    }
+
+    /**
+     * @Requirements "Backstage passes" Quality increases by 2 when there are 10 days or less
+     */
+    public function testQualityIncrease2ForBackstage()
+    {
+        $items = array(new Item("Backstage passes to a TAFKAL80ETC concert", 10, 10));
+        $gildedRose = new GildedRose($items);
+        $gildedRose->update_quality();
+
+        $this->assertEquals(9, $items[0]->sell_in);
+        $this->assertEquals(12, $items[0]->quality);
+    }
+
+    /**
+     * @Requirements "Backstage passes" Quality increases by 3 when there are 5 days or less
+     */
+    public function testQualityIncrease3ForBackstage()
+    {
+        $items = array(new Item("Backstage passes to a TAFKAL80ETC concert", 5, 10));
+        $gildedRose = new GildedRose($items);
+        $gildedRose->update_quality();
+
+        $this->assertEquals(4, $items[0]->sell_in);
+        $this->assertEquals(13, $items[0]->quality);
+    }
+
+    /**
+     * @Requirements "Backstage passes" Quality drops to 0 after the concert
+     */
+    public function testQualityDropToZeroAfterConcert()
+    {
+        $items = array(new Item("Backstage passes to a TAFKAL80ETC concert", 0, 10));
+        $gildedRose = new GildedRose($items);
+        $gildedRose->update_quality();
+
+        $this->assertEquals(-1, $items[0]->sell_in);
+        $this->assertEquals(0, $items[0]->quality);
     }
 }
