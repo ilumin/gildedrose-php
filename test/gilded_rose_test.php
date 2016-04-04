@@ -60,4 +60,16 @@ class GildedRoseTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals(50, $items[0]->quality);
     }
+
+    /**
+     * @Requirements "Sulfuras", being a legendary item, never has to be sold or decreases in Quality
+     */
+    public function testQualitySulfurasNeverDecreases()
+    {
+        $items = array(new Item("Sulfuras, Hand of Ragnaros", 1, 80));
+        $gildedRose = new GildedRose($items);
+        $gildedRose->update_quality();
+
+        $this->assertEquals(80, $items[0]->quality);
+    }
 }
