@@ -48,4 +48,16 @@ class GildedRoseTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals(1, $items[0]->quality);
     }
+
+    /**
+     * @Requirements The Quality of an item is never more than 50
+     */
+    public function testQualityNeverMoreThanFifty()
+    {
+        $items = array(new Item("Aged Brie", 1, 50));
+        $gildedRose = new GildedRose($items);
+        $gildedRose->update_quality();
+
+        $this->assertEquals(50, $items[0]->quality);
+    }
 }
