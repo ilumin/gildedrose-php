@@ -4,7 +4,10 @@ require_once 'gilded_rose.php';
 
 class GildedRoseTest extends PHPUnit_Framework_TestCase {
 
-    function testFoo() {
+    /**
+     * @Requirements Never change item name
+     */
+    function testNeverChangeItemName() {
         $items = array(new Item("foo", 0, 0));
         $gildedRose = new GildedRose($items);
         $gildedRose->update_quality();
@@ -167,39 +170,7 @@ class GildedRoseTest extends PHPUnit_Framework_TestCase {
     public function testGoldenMaster()
     {
         ob_start();
-        echo "OMGHAI!\n";
-
-        $items = array(
-            new Item('+5 Dexterity Vest', 10, 20),
-            new Item('+5 Dexterity Vest', 0, 20),
-            new Item('Aged Brie', 2, 0),
-            new Item('Aged Brie', 6, 47),
-            new Item('Elixir of the Mongoose', 5, 7),
-            new Item('Sulfuras, Hand of Ragnaros', 0, 80),
-            new Item('Sulfuras, Hand of Ragnaros', -1, 80),
-            new Item('Backstage passes to a TAFKAL80ETC concert', 15, 49),
-            new Item('Backstage passes to a TAFKAL80ETC concert', 10, 20),
-            new Item('Backstage passes to a TAFKAL80ETC concert', 2, 10),
-            // this conjured item does not work properly yet
-            new Item('Conjured Mana Cake', 1, 20)
-        );
-
-        $app = new GildedRose($items);
-
-        $days = 6;
-        if (count($argv) > 1) {
-            $days = (int) $argv[1];
-        }
-
-        for ($i = 0; $i < $days; $i++) {
-            echo("-------- day $i --------\n");
-            echo("name, sellIn, quality\n");
-            foreach ($items as $item) {
-                echo $item . PHP_EOL;
-            }
-            echo PHP_EOL;
-            $app->update_quality();
-        }
+        require_once '/app/src/texttest_fixture.php';
         $response = ob_get_contents();
         ob_end_clean();
 
