@@ -8,7 +8,21 @@ class GildedRoseTest extends PHPUnit_Framework_TestCase {
         $items = array(new Item("foo", 0, 0));
         $gildedRose = new GildedRose($items);
         $gildedRose->update_quality();
+
         $this->assertEquals("foo", $items[0]->name);
+    }
+
+    /**
+     * @Requirements Once the sell by date has passed, Quality degrades twice as fast
+     */
+    public function testQuality()
+    {
+        $items = array(new Item("foo", 1, 10));
+        $gildedRose = new GildedRose($items);
+        $gildedRose->update_quality();
+
+        $this->assertEquals(0, $items[0]->sell_in);
+        $this->assertEquals(9, $items[0]->quality);
     }
 
 }
