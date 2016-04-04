@@ -37,4 +37,15 @@ class GildedRoseTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(0, $items[0]->quality);
     }
 
+    /**
+     * @Requirements "Aged Brie" actually increases in Quality the older it gets
+     */
+    public function testQualityIncreasesForAgedBrie()
+    {
+        $items = array(new Item("Aged Brie", 1, 0));
+        $gildedRose = new GildedRose($items);
+        $gildedRose->update_quality();
+
+        $this->assertEquals(1, $items[0]->quality);
+    }
 }
