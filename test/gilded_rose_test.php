@@ -13,7 +13,7 @@ class GildedRoseTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @Requirements Once the sell by date has passed, Quality degrades twice as fast
+     * @Requirements At the end of each day our system lowers both values for every item
      */
     public function testQualityDegrades()
     {
@@ -23,6 +23,19 @@ class GildedRoseTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals(0, $items[0]->sell_in);
         $this->assertEquals(9, $items[0]->quality);
+    }
+
+    /**
+     * @Requirements Once the sell by date has passed, Quality degrades twice as fast
+     */
+    public function testQualityDegradesTwice()
+    {
+        $items = array(new Item("foo", 0, 10));
+        $gildedRose = new GildedRose($items);
+        $gildedRose->update_quality();
+
+        $this->assertEquals(-1, $items[0]->sell_in);
+        $this->assertEquals(8, $items[0]->quality);
     }
 
     /**
