@@ -22,13 +22,9 @@ class GildedRose {
      */
     public function updateItemSellIn(Item $item)
     {
-        $this->updateQualityBeforeSellIn($item);
-
         if ($item->name != 'Sulfuras, Hand of Ragnaros') {
             $item->sell_in = $item->sell_in - 1;
         }
-
-        $this->updateQualityAfterSellIn($item);
     }
 
     /**
@@ -36,9 +32,67 @@ class GildedRose {
      *
      * @param Item $item
      */
-    public function updateItemQuality(Item $item)
+    public function updateItemQuality(Item &$item)
     {
+        switch ($item->name) {
+            case 'Aged Brie':
+                $dropRate = 1;
 
+                if ($item->sell_in < 0) {
+                    $dropRate = $dropRate * 2;
+                }
+                break;
+
+            case 'Backstage passes to a TAFKAL80ETC concert':
+                $dropRate = 1;
+
+                if ($item->sell_in < 10) {
+                    $dropRate = 2;
+                }
+
+                if ($item->sell_in < 5) {
+                    $dropRate = 3;
+                }
+
+                if ($item->sell_in < 0) {
+                    $dropRate = -$item->quality;
+                }
+                break;
+
+            case 'Sulfuras, Hand of Ragnaros':
+                $dropRate = 0;
+                break;
+
+            default:
+                $dropRate = -1;
+
+                if ($item->sell_in < 0) {
+                    $dropRate = $dropRate * 2;
+                }
+                break;
+        }
+
+        $item->quality = $item->quality + $dropRate;
+
+        $this->validateItemQuality($item);
+    }
+
+    public function validateItemQuality(Item &$item)
+    {
+        switch ($item->name) {
+            case 'Sulfuras, Hand of Ragnaros':
+                $item->quality = $item->quality;
+                break;
+
+            default:
+                if ($item->quality >= 50) {
+                    $item->quality = 50;
+                }
+                else if ($item->quality < 0) {
+                    $item->quality = 0;
+                }
+                break;
+        }
     }
 
     /**
