@@ -1,6 +1,7 @@
 <?php
 
 require_once 'gilded_rose.php';
+require_once 'Item.php';
 
 echo "OMGHAI!\n";
 
