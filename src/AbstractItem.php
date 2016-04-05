@@ -4,8 +4,8 @@ abstract class AbstractItem implements InterfaceItem
 {
     const MAX_QUALITY = 50;
     const MIN_QUALITY = 0;
-    const QUALITY_DROP_RATE = -1;
 
+    public $qualityDropRate = -1;
     public $item;
 
     function __construct(Item $item)
@@ -41,9 +41,9 @@ abstract class AbstractItem implements InterfaceItem
     public function getQualityDropRate()
     {
         if ($this->item->sell_in < 0) {
-            return 2 * self::QUALITY_DROP_RATE;
+            return 2 * $this->qualityDropRate;
         }
 
-        return self::QUALITY_DROP_RATE;
+        return $this->qualityDropRate;
     }
 }

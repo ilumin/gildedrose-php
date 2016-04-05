@@ -2,7 +2,7 @@
 
 class ItemSulfuras extends AbstractItem
 {
-    const QUALITY_DROP_RATE = 0;
+    public $qualityDropRate = 0;
 
     public function updateSellIn()
     {

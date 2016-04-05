@@ -63,8 +63,8 @@ class GildedRoseTest extends PHPUnit_Framework_TestCase {
         $gildedRose = new GildedRose($items);
         $gildedRose->update_quality();
 
-        $this->assertEquals(0, $items[0]->sell_in);
-        $this->assertEquals(1, $items[0]->quality);
+        $this->assertEquals(0, $items[0]->sell_in, "Expected after the end of the day, `Aged Brie` sell_in value should decrease from 1 to 0.");
+        $this->assertEquals(1, $items[0]->quality, "Expected after the end of the day, `Aged Brie` quality value should increase from 0 to 1.");
     }
 
     /**
