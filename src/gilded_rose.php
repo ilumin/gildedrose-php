@@ -34,10 +34,23 @@ class GildedRose {
      */
     public function updateItemQuality(Item &$item)
     {
+        $dropRate = $this->getItemDropRate($item);
+
+        $item->quality = $item->quality + $dropRate;
+
+        $this->validateItemQuality($item);
+    }
+
+    /**
+     * Get item drop rate
+     *
+     * @param Item $item
+     */
+    public function getItemDropRate(Item $item)
+    {
         switch ($item->name) {
             case 'Aged Brie':
                 $dropRate = 1;
-
                 if ($item->sell_in < 0) {
                     $dropRate = $dropRate * 2;
                 }
@@ -45,15 +58,12 @@ class GildedRose {
 
             case 'Backstage passes to a TAFKAL80ETC concert':
                 $dropRate = 1;
-
                 if ($item->sell_in < 10) {
                     $dropRate = 2;
                 }
-
                 if ($item->sell_in < 5) {
                     $dropRate = 3;
                 }
-
                 if ($item->sell_in < 0) {
                     $dropRate = -$item->quality;
                 }
@@ -65,16 +75,13 @@ class GildedRose {
 
             default:
                 $dropRate = -1;
-
                 if ($item->sell_in < 0) {
                     $dropRate = $dropRate * 2;
                 }
                 break;
         }
 
-        $item->quality = $item->quality + $dropRate;
-
-        $this->validateItemQuality($item);
+        return $dropRate;
     }
 
     public function validateItemQuality(Item &$item)
