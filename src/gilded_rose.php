@@ -34,9 +34,7 @@ class GildedRose {
                 }
             }
 
-            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                $item->sell_in = $item->sell_in - 1;
-            }
+            $this->updateSellIn($item);
 
             if ($item->sell_in < 0) {
                 if ($item->name != 'Aged Brie') {
@@ -55,6 +53,18 @@ class GildedRose {
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Update sell_in property
+     *
+     * @param Item $item
+     */
+    public function updateSellIn(Item $item)
+    {
+        if ($item->name != 'Sulfuras, Hand of Ragnaros') {
+            $item->sell_in = $item->sell_in - 1;
         }
     }
 }
