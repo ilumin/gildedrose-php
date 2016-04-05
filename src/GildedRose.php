@@ -15,6 +15,27 @@ class GildedRose {
         }
     }
 
+    public function registerGildedRoseItem(Item $item)
+    {
+        switch ($item->name) {
+            case 'Aged Brie':
+                return new ItemAgedBrie($item->sell_in, $item->quality);
+                break;
+
+            case 'Backstage passes to a TAFKAL80ETC concert':
+                return new ItemBackstage($item->sell_in, $item->quality);
+                break;
+
+            case 'Sulfuras, Hand of Ragnaros':
+                return new ItemSulfuras($item->sell_in, $item->quality);
+                break;
+
+            default:
+                return new ItemDefault($item->sell_in, $item->quality);
+                break;
+        }
+    }
+
     /**
      * Update sell_in property
      *
