@@ -6,11 +6,11 @@ class ItemSulfuras extends AbstractItem
 
     public function updateSellIn()
     {
-        $this->sell_in = $this->sell_in;
+        $this->item->sell_in = $this->item->sell_in;
     }
 
     public function updateQuality()
     {
-        $this->quality = $this->quality;
+        $this->item->quality = $this->item->quality;
     }
 }

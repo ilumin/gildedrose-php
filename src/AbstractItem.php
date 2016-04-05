@@ -6,13 +6,11 @@ abstract class AbstractItem implements InterfaceItem
     const MIN_QUALITY = 0;
     const QUALITY_DROP_RATE = -1;
 
-    public $sell_in;
-    public $quality;
+    public $item;
 
     function __construct(Item $item)
     {
-        $this->sell_in = $item->sell_in;
-        $this->quality = $item->quality;
+        $this->item = $item;
     }
 
     public function updateProperties()
@@ -23,26 +21,26 @@ abstract class AbstractItem implements InterfaceItem
 
     public function updateSellIn()
     {
-        $this->sell_in = $this->sell_in - 1;
+        $this->item->sell_in = $this->item->sell_in - 1;
     }
 
     public function updateQuality()
     {
         $dropRate = $this->getQualityDropRate();
-        $this->quality = $this->quality + $dropRate;
+        $this->item->quality = $this->item->quality + $dropRate;
 
-        if ($this->quality > self::MAX_QUALITY) {
-            $this->quality = self::MAX_QUALITY;
+        if ($this->item->quality > self::MAX_QUALITY) {
+            $this->item->quality = self::MAX_QUALITY;
         }
 
-        if ($this->quality < self::MIN_QUALITY) {
-            $this->quality = self::MIN_QUALITY;
+        if ($this->item->quality < self::MIN_QUALITY) {
+            $this->item->quality = self::MIN_QUALITY;
         }
     }
 
     public function getQualityDropRate()
     {
-        if ($this->sell_in < 0) {
+        if ($this->item->sell_in < 0) {
             return 2 * self::QUALITY_DROP_RATE;
         }
 
