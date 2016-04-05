@@ -5,6 +5,7 @@ require_once 'AbstractItem.php';
 require_once 'ItemAgedBrie.php';
 require_once 'ItemBackstage.php';
 require_once 'ItemSulfuras.php';
+require_once 'ItemConjured.php';
 require_once 'ItemDefault.php';
 
 class GildedRose {
@@ -35,6 +36,10 @@ class GildedRose {
 
                 case 'Sulfuras, Hand of Ragnaros':
                     $gildedRoseItem = new ItemSulfuras($item);
+                    break;
+
+                case 'Conjured Mana Cake':
+                    $gildedRoseItem = new ItemConjured($item);
                     break;
 
                 default:
