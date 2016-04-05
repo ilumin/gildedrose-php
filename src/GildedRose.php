@@ -1,130 +1,48 @@
 <?php
 
+require_once 'InterfaceItem.php';
+require_once 'AbstractItem.php';
+require_once 'ItemAgedBrie.php';
+require_once 'ItemBackstage.php';
+require_once 'ItemSulfuras.php';
+require_once 'ItemDefault.php';
+
 class GildedRose {
 
     private $items;
 
     function __construct($items) {
-        $this->items = $items;
+        $this->registerGildedRoseItem($items);
     }
 
     function update_quality() {
         foreach ($this->items as $item) {
-            $this->updateItemSellIn($item);
-            $this->updateItemQuality($item);
+            $item->updateProperties();
         }
     }
 
-    public function registerGildedRoseItem(Item $item)
+    public function registerGildedRoseItem(array $items)
     {
-        switch ($item->name) {
-            case 'Aged Brie':
-                return new ItemAgedBrie($item->sell_in, $item->quality);
-                break;
+        foreach ($items as $item) {
+            switch ($item->name) {
+                case 'Aged Brie':
+                    $gildedRoseItem = new ItemAgedBrie($item);
+                    break;
 
-            case 'Backstage passes to a TAFKAL80ETC concert':
-                return new ItemBackstage($item->sell_in, $item->quality);
-                break;
+                case 'Backstage passes to a TAFKAL80ETC concert':
+                    $gildedRoseItem = new ItemBackstage($item);
+                    break;
 
-            case 'Sulfuras, Hand of Ragnaros':
-                return new ItemSulfuras($item->sell_in, $item->quality);
-                break;
+                case 'Sulfuras, Hand of Ragnaros':
+                    $gildedRoseItem = new ItemSulfuras($item);
+                    break;
 
-            default:
-                return new ItemDefault($item->sell_in, $item->quality);
-                break;
-        }
-    }
+                default:
+                    $gildedRoseItem = new ItemDefault($item);
+                    break;
+            }
 
-    /**
-     * Update sell_in property
-     *
-     * @param Item $item
-     */
-    public function updateItemSellIn(Item $item)
-    {
-        if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-            $item->sell_in = $item->sell_in - 1;
-        }
-    }
-
-    /**
-     * Update sell_in property
-     *
-     * @param Item $item
-     */
-    public function updateItemQuality(Item $item)
-    {
-        $dropRate = $this->getItemDropRate($item);
-
-        $item->quality = $item->quality + $dropRate;
-
-        $this->validateItemQuality($item);
-    }
-
-    /**
-     * Get item drop rate
-     *
-     * @param Item $item
-     */
-    public function getItemDropRate(Item $item)
-    {
-        switch ($item->name) {
-            case 'Aged Brie':
-                $dropRate = 1;
-                if ($item->sell_in < 0) {
-                    $dropRate = $dropRate * 2;
-                }
-                break;
-
-            case 'Backstage passes to a TAFKAL80ETC concert':
-                $dropRate = 1;
-                if ($item->sell_in < 10) {
-                    $dropRate = 2;
-                }
-                if ($item->sell_in < 5) {
-                    $dropRate = 3;
-                }
-                if ($item->sell_in < 0) {
-                    $dropRate = -$item->quality;
-                }
-                break;
-
-            case 'Sulfuras, Hand of Ragnaros':
-                $dropRate = 0;
-                break;
-
-            default:
-                $dropRate = -1;
-                if ($item->sell_in < 0) {
-                    $dropRate = $dropRate * 2;
-                }
-                break;
-        }
-
-        return $dropRate;
-    }
-
-    /**
-     * Validate and update item quality
-     *
-     * @param Item $item
-     */
-    public function validateItemQuality(Item $item)
-    {
-        switch ($item->name) {
-            case 'Sulfuras, Hand of Ragnaros':
-                $item->quality = $item->quality;
-                break;
-
-            default:
-                if ($item->quality >= 50) {
-                    $item->quality = 50;
-                }
-                else if ($item->quality < 0) {
-                    $item->quality = 0;
-                }
-                break;
+            $this->items[] = $gildedRoseItem;
         }
     }
 }
