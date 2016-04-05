@@ -10,7 +10,8 @@ class GildedRose {
 
     function update_quality() {
         foreach ($this->items as $item) {
-            $this->updateSellIn($item);
+            $this->updateItemSellIn($item);
+            $this->updateItemQuality($item);
         }
     }
 
@@ -19,7 +20,7 @@ class GildedRose {
      *
      * @param Item $item
      */
-    public function updateSellIn(Item $item)
+    public function updateItemSellIn(Item $item)
     {
         $this->updateQualityBeforeSellIn($item);
 
@@ -28,6 +29,16 @@ class GildedRose {
         }
 
         $this->updateQualityAfterSellIn($item);
+    }
+
+    /**
+     * Update sell_in property
+     *
+     * @param Item $item
+     */
+    public function updateItemQuality(Item $item)
+    {
+
     }
 
     /**
