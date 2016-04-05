@@ -7,7 +7,7 @@ class ItemBackStage extends AbstractItem
     public function getQualityDropRate()
     {
         if ($this->item->sell_in < 0) {
-            return 0 * $this->qualityDropRate;
+            return -$this->item->quality;
         }
 
         if ($this->item->sell_in < 5) {
