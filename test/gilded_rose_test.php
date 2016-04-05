@@ -147,7 +147,7 @@ class GildedRoseTest extends PHPUnit_Framework_TestCase {
 
     /*
      * @Requirements "Conjured" items degrade in Quality twice as fast as normal items
-     *
+     */
     public function testQualityDegradesTwiceForConjured()
     {
         $items = array(
@@ -161,8 +161,6 @@ class GildedRoseTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(-1, $items[1]->sell_in);
         $this->assertEquals(6, $items[1]->quality);
     }
-
-    */
 
     /**
      * Golden Master Test
