@@ -8,6 +8,11 @@ require_once 'ItemSulfuras.php';
 require_once 'ItemConjured.php';
 require_once 'ItemDefault.php';
 
+define('AGEDBRIE', 'Aged Brie');
+define('BACKSTAGE', 'Backstage passes to a TAFKAL80ETC concert');
+define('SULFURAS', 'Sulfuras, Hand of Ragnaros');
+define('CONJURED', 'Conjured Mana Cake');
+
 class GildedRose {
 
     private $items;
@@ -26,19 +31,19 @@ class GildedRose {
     {
         foreach ($items as $item) {
             switch ($item->name) {
-                case 'Aged Brie':
+                case AGEDBRIE:
                     $gildedRoseItem = new ItemAgedBrie($item);
                     break;
 
-                case 'Backstage passes to a TAFKAL80ETC concert':
+                case BACKSTAGE:
                     $gildedRoseItem = new ItemBackstage($item);
                     break;
 
-                case 'Sulfuras, Hand of Ragnaros':
+                case SULFURAS:
                     $gildedRoseItem = new ItemSulfuras($item);
                     break;
 
-                case 'Conjured Mana Cake':
+                case CONJURED:
                     $gildedRoseItem = new ItemConjured($item);
                     break;
 
