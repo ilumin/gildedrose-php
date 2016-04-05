@@ -84,6 +84,11 @@ class GildedRose {
         return $dropRate;
     }
 
+    /**
+     * Validate and update item quality
+     *
+     * @param Item $item
+     */
     public function validateItemQuality(Item &$item)
     {
         switch ($item->name) {
