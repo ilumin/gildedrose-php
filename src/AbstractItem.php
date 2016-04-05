@@ -40,10 +40,15 @@ abstract class AbstractItem implements InterfaceItem
 
     public function getQualityDropRate()
     {
-        if ($this->item->sell_in < 0) {
+        if ($this->isExpired()) {
             return 2 * $this->qualityDropRate;
         }
 
         return $this->qualityDropRate;
+    }
+
+    public function isExpired()
+    {
+        return $this->item->sell_in < 0;
     }
 }
