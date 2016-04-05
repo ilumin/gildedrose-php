@@ -32,7 +32,7 @@ class GildedRose {
      *
      * @param Item $item
      */
-    public function updateItemQuality(Item &$item)
+    public function updateItemQuality(Item $item)
     {
         $dropRate = $this->getItemDropRate($item);
 
@@ -89,7 +89,7 @@ class GildedRose {
      *
      * @param Item $item
      */
-    public function validateItemQuality(Item &$item)
+    public function validateItemQuality(Item $item)
     {
         switch ($item->name) {
             case 'Sulfuras, Hand of Ragnaros':
